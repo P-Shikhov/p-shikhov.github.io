@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pavel Shikhov - Software Developer</title>
+    <link>https://p-shikhov.github.io/</link>
+    <description>Recent content on Pavel Shikhov - Software Developer</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 28 Oct 2021 09:00:00 +0000</lastBuildDate><atom:link href="https://p-shikhov.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>First Post</title>
+      <link>https://p-shikhov.github.io/blog/first/</link>
+      <pubDate>Thu, 28 Oct 2021 09:00:00 +0000</pubDate>
+      
+      <guid>https://p-shikhov.github.io/blog/first/</guid>
+      <description>In this blog, I will write about my experience of building software. Currently I am working on a Python project - a contact book with an advanced functionality. The goal of my doing this is to learn the ins and outs of the Django framework. Soon there will be a post to cover my advancements.</description>
+    </item>
+    
+    <item>
+      <title>About Me</title>
+      <link>https://p-shikhov.github.io/about/</link>
+      <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://p-shikhov.github.io/about/</guid>
+      <description>About me</description>
+    </item>
+    
+  </channel>
+</rss>
