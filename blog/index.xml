@@ -6,14 +6,29 @@
     <description>Recent content in Blog on Pavel Shikhov - Software Developer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 28 Oct 2021 09:00:00 +0000</lastBuildDate><atom:link href="https://p-shikhov.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 09 Nov 2021 09:00:00 +0000</lastBuildDate><atom:link href="https://p-shikhov.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>First Post</title>
-      <link>https://p-shikhov.github.io/blog/first/</link>
-      <pubDate>Thu, 28 Oct 2021 09:00:00 +0000</pubDate>
+      <title>Notes on the Contact book app, pt. 2</title>
+      <link>https://p-shikhov.github.io/blog/contacts-2/</link>
+      <pubDate>Tue, 09 Nov 2021 09:00:00 +0000</pubDate>
       
-      <guid>https://p-shikhov.github.io/blog/first/</guid>
-      <description>In this blog, I will write about my experience of building software. Currently I am working on a Python project - a contact book with an advanced functionality. The goal of my doing this is to learn the ins and outs of the Django framework. Soon there will be a post to cover my advancements.</description>
+      <guid>https://p-shikhov.github.io/blog/contacts-2/</guid>
+      <description>Please mind that this project was made to gain a better grasp on Django. The code may have weak points and shouldn&amp;rsquo;t be used in production.
+ You can read the first article here. The second article deals with the following topics:
+  adding custom authentication with email and username;
+  adding contacts as a logged-in user;
+  implementing logging for a specific contact.
+  Custom authentication with email and username The default Django authentication uses username.</description>
+    </item>
+    
+    <item>
+      <title>Notes on the Contact book app, pt. 1</title>
+      <link>https://p-shikhov.github.io/blog/contacts-1/</link>
+      <pubDate>Tue, 02 Nov 2021 09:00:00 +0000</pubDate>
+      
+      <guid>https://p-shikhov.github.io/blog/contacts-1/</guid>
+      <description>Please mind that this project was made to gain a better grasp on Django. The code may have weak points and shouldn&amp;rsquo;t be used in production.
+ Not so long ago I started building an InteractiveContacts project using Django and native JS. Why this tech stack? Django is the go-to framework thanks to its out-of-the-box features. Native JS allows one to build things from scratch - I decided to go the hard way and didn&amp;rsquo;t use front-end frameworks.</description>
     </item>
     
   </channel>

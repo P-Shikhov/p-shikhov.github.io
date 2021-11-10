@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title> Notes on the Contact book app, pt. 2 - Pavel Shikhov - Software Developer </title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="referrer" content="no-referrer">
+    <meta name="description" content="" />
+    <meta property="og:site_name" content="Pavel Shikhov - Software Developer" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://p-shikhov.github.io/blog/contacts-2/" />
+    <meta property="og:title" content="Notes on the Contact book app, pt. 2" />
+    <meta property="og:image" content="https://p-shikhov.github.io/" />
+    <meta property="og:description" content="" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <meta name="twitter:title" content="Notes on the Contact book app, pt. 2" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image" content="https://p-shikhov.github.io/" />
+
+    <link rel="canonical" href="https://p-shikhov.github.io/blog/contacts-2/">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="https://p-shikhov.github.io/css/custom.css" />
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github-gist.min.css" integrity="sha512-od7JLoOTxM8w/HSKGzP9Kexc20K9p/M2zxSWsd7H1e4Ctf+8SQFtCWEZnW5u6ul5ehSECa5QmOk9ju2nQMmlVA==" crossorigin="anonymous" />
+    
+
+    
+
+    <link rel="shortcut icon"
+        href="https://p-shikhov.github.io/images/favicon.png">
+
+    
+    <link href="https://p-shikhov.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Pavel Shikhov - Software Developer" />
+    
+</head>
+
+<body>
+    
+<div class="mt-xl header">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <a href="https://p-shikhov.github.io/">
+                    <h1 class="name">Pavel Shikhov - Software Developer</h1>
+                </a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <ul class="nav nav-primary">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="https://p-shikhov.github.io/">
+                        
+                        Home
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="https://p-shikhov.github.io/about/">
+                        
+                        About
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/P-Shikhov">
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-lg-8">
+                <h1 class="mx-0 mx-md-4 blog-post-title">Notes on the Contact book app, pt. 2</h1>
+
+                <div class="mb-md-4 meta">
+                    
+                    
+                    <span class="author" title="Pavel Shikhov">
+                        Pavel Shikhov
+                    </span>
+                    
+                    
+
+                    <span class="date middot" title='Tue Nov 9 2021 09:00:00 UTC'>
+                        2021-11-09
+                    </span>
+
+                    <span class="reading-time middot">
+                        4 min read
+                    </span>
+
+                    <div class="d-none d-md-inline tags">
+                        <ul class="list-unstyled d-inline">
+                            
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="markdown blog-post-content">
+                    
+    <blockquote>
+<p>Please mind that this project was made to gain a better grasp on Django. The code may have weak points and shouldn&rsquo;t be used in production.</p>
+</blockquote>
+<p>You can read the first article <a href="https://p-shikhov.github.io/blog/contacts-1">here</a>. The second article deals with the following topics:</p>
+<ul>
+<li>
+<p>adding custom authentication with email and username;</p>
+</li>
+<li>
+<p>adding contacts as a logged-in user;</p>
+</li>
+<li>
+<p>implementing logging for a specific contact.</p>
+</li>
+</ul>
+<h3 id="custom-authentication-with-email-and-username">Custom authentication with email and username</h3>
+<p>The default Django authentication uses username. To <em>additionally</em> allow users to log in with their email, a new <strong>email_and_uname_auth</strong> app with custom user model and backend logic was added. Note that the django.contrib.auth is still in the INSTALLED_APPS.</p>
+<h4 id="custom-user-model">Custom User Model</h4>
+<p>When creating a custom user model, developers usually subclass <a href="https://docs.djangoproject.com/en/3.2/topics/auth/customizing/#django.contrib.auth.models.AbstractUser">AbstractUser</a> or <a href="https://docs.djangoproject.com/en/3.2/topics/auth/customizing/#django.contrib.auth.models.AbstractBaseUser">AbstractBaseUser</a>. AbstractUser contains fields from the User model and enables adding new fields. On the other hand, AbstractBaseUser has the minimal amount of fields necessary for authentication handling and a programmer is implied to add all other fields. This model is exactly what I needed.</p>
+<p>My user model&rsquo;s fields are <code>first_name</code>, <code>last_name</code>, <code>email</code>, and <code>username</code>. The model also inherits PermissionsMixin to use the <code>is_staff</code> and <code>is_active</code> fields.</p>
+<p>To specify that the email field is used for authentication, <a href="https://docs.djangoproject.com/en/3.2/topics/auth/customizing/#django.contrib.auth.models.CustomUser.USERNAME_FIELD">USERNAME_FIELD</a> was set to &lsquo;email&rsquo;.</p>
+<p>Handling of custom user creation is done with the CustomUserManager located in the same models.py file. The manager&rsquo;s logic is very typical.</p>
+<p>Lastly, <a href="https://docs.djangoproject.com/en/3.2/ref/settings/#std:setting-AUTH_USER_MODEL">AUTH_USER_MODEL</a> was specified in the <strong>settings.py</strong>.</p>
+<h4 id="custom-backend">Custom Backend</h4>
+<p>The created custom user model needs to be authenticated against a custom service. In my app, this is the EmailOrUsernameModelBackend that subclasses ModelBackend. The backend has the <code>authenticate</code> method where the user model is retrieved with get_user_model (that&rsquo;s what we added <strong>AUTH_USER_MODEL</strong> for in the previous section) and then used to sign in a user based on the provided credentials.</p>
+<p>A new <a href="https://docs.djangoproject.com/en/3.2/ref/settings/#std:setting-AUTHENTICATION_BACKENDS">AUTHENTICATION_BACKENDS</a> setting references the created backend.</p>
+<h3 id="adding-contacts-as-a-logged-in-user">Adding contacts as a logged-in user</h3>
+<p>Previously, contacts could be added as an anonymous user. To add contacts this now, one must log in first.</p>
+<p>Adding this requirement meant that</p>
+<ul>
+<li>
+<p>the Contact model should have a user field
+I made this field a <a href="https://docs.djangoproject.com/en/3.2/ref/models/fields/#django.db.models.ForeignKey">ForeignKey</a> (many-to-one relationship) because one user can have lots of contacts. In case a user gets deleted, their contacts should be deleted too - thus the field&rsquo;s on_delete is models.<a href="https://docs.djangoproject.com/en/3.2/ref/models/fields/#django.db.models.CASCADE">CASCADE</a>.</p>
+</li>
+<li>
+<p>views should implement necessary access controls
+Now, the DashboardView also inherits from the <a href="https://docs.djangoproject.com/en/3.2/topics/auth/default/#django.contrib.auth.mixins.LoginRequiredMixin">LoginRequiredMixin</a>. Note this class is the first in the inheritance list because authentication check has a higher priority.
+The process_contact_creation and handle_contact_details_request functions all apply the <a href="https://docs.djangoproject.com/en/3.2/topics/auth/default/#the-login-required-decorator">login_required</a> decorator.
+Also, additional checks are now made on contact&rsquo;s creation and update.</p>
+</li>
+</ul>
+<h3 id="logging-for-a-specific-contact">Logging for a specific contact</h3>
+<p>I didn&rsquo;t create a new app for the logging functionality because it is an integral part of the contact app. Instead, a model and a class-based view were added.</p>
+<h4 id="logentry-model">LogEntry Model</h4>
+<p>The interesting part about the LogEntry model is that it has models.<a href="https://docs.djangoproject.com/en/3.2/ref/models/fields/#django.db.models.CharField">CharField</a> fields. They allow users to select a value from a set of predefined values. To define such values, it is good to create a class that subclasses models.TextChoices and declare constants - one for each choice. This class approach is better that an array of &ldquo;CHOICE_KEY&rdquo; - &ldquo;Choice display value&rdquo; tuples due to its convenience and maintenance.</p>
+<h4 id="view">View</h4>
+<p>The case is very similar to that of the main contacts' view described in part 1: <em>list</em> of log entries should be displayed next to a log entry creation <em>form</em>. But this time I had to implement get_queryset differently and override render_to_response:</p>
+<ul>
+<li>
+<p>get_queryset
+If the contact exists, its creator is checked against the currently authenticated user. If everything&rsquo;s alright, only then the corresponding log is returned. To provide for the situation when a user requests a log for a non-existent contact, the handling of the DoesNotExist exception was added: in a negative scenario, None is returned. Why None and not HttpResponseRedirect? Because get_queryset must return a QuerySet.</p>
+</li>
+<li>
+<p>render_to_response
+This function is overridden to check if get_queryset returns None. In this case, a redirect happens.</p>
+</li>
+</ul>
+
+
+
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="comments">
+    <div class="py-3 content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-lg-8">
+                    <div class="comments">
+                        <script src="https://utteranc.es/client.js" repo=""
+                            issue-term="pathname" label="comment" theme="github-light" crossorigin="anonymous" async>
+                            </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+    
+
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js" defer></script>
+        
+        <script>
+            window.addEventListener('load', function() {
+                hljs.initHighlighting();
+            }, true);
+        </script>
+    
+
+    
+
+    
+    
+        
+
+    
+</body>
+
+</html>

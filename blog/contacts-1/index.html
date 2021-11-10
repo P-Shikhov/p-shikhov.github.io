@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title> Notes on the Contact book app, pt. 1 - Pavel Shikhov - Software Developer </title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="referrer" content="no-referrer">
+    <meta name="description" content="" />
+    <meta property="og:site_name" content="Pavel Shikhov - Software Developer" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://p-shikhov.github.io/blog/contacts-1/" />
+    <meta property="og:title" content="Notes on the Contact book app, pt. 1" />
+    <meta property="og:image" content="https://p-shikhov.github.io/" />
+    <meta property="og:description" content="" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <meta name="twitter:title" content="Notes on the Contact book app, pt. 1" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image" content="https://p-shikhov.github.io/" />
+
+    <link rel="canonical" href="https://p-shikhov.github.io/blog/contacts-1/">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="https://p-shikhov.github.io/css/custom.css" />
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github-gist.min.css" integrity="sha512-od7JLoOTxM8w/HSKGzP9Kexc20K9p/M2zxSWsd7H1e4Ctf+8SQFtCWEZnW5u6ul5ehSECa5QmOk9ju2nQMmlVA==" crossorigin="anonymous" />
+    
+
+    
+
+    <link rel="shortcut icon"
+        href="https://p-shikhov.github.io/images/favicon.png">
+
+    
+    <link href="https://p-shikhov.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Pavel Shikhov - Software Developer" />
+    
+</head>
+
+<body>
+    
+<div class="mt-xl header">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <a href="https://p-shikhov.github.io/">
+                    <h1 class="name">Pavel Shikhov - Software Developer</h1>
+                </a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <ul class="nav nav-primary">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="https://p-shikhov.github.io/">
+                        
+                        Home
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="https://p-shikhov.github.io/about/">
+                        
+                        About
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/P-Shikhov">
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-lg-8">
+                <h1 class="mx-0 mx-md-4 blog-post-title">Notes on the Contact book app, pt. 1</h1>
+
+                <div class="mb-md-4 meta">
+                    
+                    
+                    <span class="author" title="Pavel Shikhov">
+                        Pavel Shikhov
+                    </span>
+                    
+                    
+
+                    <span class="date middot" title='Tue Nov 2 2021 09:00:00 UTC'>
+                        2021-11-02
+                    </span>
+
+                    <span class="reading-time middot">
+                        3 min read
+                    </span>
+
+                    <div class="d-none d-md-inline tags">
+                        <ul class="list-unstyled d-inline">
+                            
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="markdown blog-post-content">
+                    
+    <blockquote>
+<p>Please mind that this project was made to gain a better grasp on Django. The code may have weak points and shouldn&rsquo;t be used in production.</p>
+</blockquote>
+<p>Not so long ago I started building an InteractiveContacts project using Django and native JS. Why this tech stack? Django is the go-to framework thanks to its out-of-the-box features. Native JS allows one to build things from scratch - I decided to go the hard way and didn&rsquo;t use front-end frameworks.</p>
+<p>As of November 2, the following functionality is a part of the <strong>contacts</strong> app:</p>
+<ul>
+<li>
+<p>create new contact;</p>
+</li>
+<li>
+<p>view contacts;</p>
+</li>
+<li>
+<p>view details of selected contact;</p>
+</li>
+<li>
+<p>edit existent contacts.</p>
+</li>
+</ul>
+<p>More will be added in the nearest future. But for now let&rsquo;s get down to interesting implementation aspects of the current version.</p>
+<h3 id="models">Models</h3>
+<ul>
+<li>
+<p>Each contact has the <code>date_born</code> field that should precede the current date. To provide for this restriction, the custom validator was added: <code>validate_date_born</code>.</p>
+</li>
+<li>
+<p>As of the <a href="https://en.wikipedia.org/wiki/E.164">E.164</a> international standard, phone number length should be less than 16 digits. To add this limitation, Django&rsquo;s <a href="https://docs.djangoproject.com/en/3.2/ref/validators/#django.core.validators.RegexValidator">RegexValidator</a> was used in the <code>phone_number</code> field.</p>
+</li>
+</ul>
+<h3 id="views-and-forms">Views and Forms</h3>
+<h4 id="class-based-views">Class-Based Views</h4>
+<p>The main view consists of a contact list and a form to create a new contact. To display this interface, the possible solutions were (but not limited to):</p>
+<ul>
+<li>
+<p>CreateView and contact list passed as a context</p>
+</li>
+<li>
+<p>ListView with the FormMixin</p>
+</li>
+<li>
+<p>ListView and overridden get_context_data with the form passed as a context.</p>
+</li>
+</ul>
+<p>ListView with the FormMixin is bulky because the <code>get</code> method would be overridden to include the form. CreateView with contact list passed as a context works well, but the priority item is the contact list that&rsquo;s why the third solution has been chosen.</p>
+<h4 id="function-based-views">Function-Based Views</h4>
+<p>To get contact details, a client should send a get request to <code>/contacts/&lt;contact_id&gt;</code>. The <code>handle_contact_details_request</code> function processes this request and returns a json object. To serialize to json, Django&rsquo;s <a href="https://docs.djangoproject.com/en/3.2/ref/request-response/#django.http.JsonResponse">JsonResponse</a> was used. Interestingly, the model instance returned by <a href="https://docs.djangoproject.com/en/3.2/topics/http/shortcuts/#get-object-or-404">get_object_or_404</a> must be converted to a dictionary for serialization (see Django&rsquo;s model_to_dict).</p>
+<p><code>handle_contact_details_request</code> also handles contact update. During this process, a check is made that the <code>id</code> POST parameter is not passed.</p>
+<p>The contact creation is handled by <code>process_contact_creation</code>. The logic is simple: if form is valid, then save the contact. The form itself is created automatically by subclassing <a href="https://docs.djangoproject.com/en/3.2/topics/forms/modelforms/#django.forms.ModelForm">ModelForm</a>.</p>
+<p>In the <a href="https://p-shikhov.github.io/blog/contacts-2">next part</a>, I will write about my experience of adding a custom auth model with username and email, adding user restrictions, and implementing the log functionality.</p>
+<p>PS To analyze and write about programming projects can be very useful - this can result in new ideas, improvements and bug fixes!</p>
+
+
+
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="comments">
+    <div class="py-3 content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-lg-8">
+                    <div class="comments">
+                        <script src="https://utteranc.es/client.js" repo=""
+                            issue-term="pathname" label="comment" theme="github-light" crossorigin="anonymous" async>
+                            </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+    
+
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js" defer></script>
+        
+        <script>
+            window.addEventListener('load', function() {
+                hljs.initHighlighting();
+            }, true);
+        </script>
+    
+
+    
+
+    
+    
+        
+
+    
+</body>
+
+</html>
